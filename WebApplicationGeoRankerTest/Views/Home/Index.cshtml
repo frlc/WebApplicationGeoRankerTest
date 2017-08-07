@@ -1,0 +1,129 @@
+﻿@model WebApplicationGeoRankerTest.Models.ReportViewModel
+
+@{
+    ViewBag.Title = "View";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/Scripts/jquery-1.10.2.js"></script>
+<script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+
+
+<div id="divReport">
+    
+
+    @using (Ajax.BeginForm("Index", "Home", new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "divReport" }))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+            <h4>GeoRanker</h4>
+            <hr />
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+                @Html.LabelFor(model => model.url, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.url, new { htmlAttributes = new { @class = "form-control", placeholder="Ex: www.microsoft.com, www.apple.com", style = "width:420px" } })
+                    @Html.ValidationMessageFor(model => model.url, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.email, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.email, new { htmlAttributes = new { @class = "form-control", placeholder = "Ex: teste@teste.com", style = "width:420px" } })
+                    @Html.ValidationMessageFor(model => model.email, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.searchEngines, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.searchEngines, new { htmlAttributes = new { @class = "form-control", placeholder = "Ex: google, bing", style = "width:420px" } })
+                    @Html.ValidationMessageFor(model => model.searchEngines, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.countries, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.countries, new { htmlAttributes = new { @class = "form-control", placeholder = "Ex: BR, US", style = "width:420px" } })
+                    @Html.ValidationMessageFor(model => model.countries, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.keywords, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.keywords, new { htmlAttributes = new { @class = "form-control", placeholder = "Ex: futebol, iphone", style = "width:420px" } })
+                    @Html.ValidationMessageFor(model => model.keywords, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-1">
+                    <input type="submit" id="Insert" value="Insert" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+        
+
+            var listReport = ViewBag.Reports as List<WebApplicationGeoRankerTest.Models.ReportViewModel>;
+
+            if (listReport != null)
+            {
+
+                <table class="table">
+                    <tr>
+                        <th class="text-center">
+                            Type
+                        </th>
+                        <th class="text-center">
+                            Domain
+                        </th>
+                        <th class="text-center">
+                            Keywords
+                        </th>
+                        <th class="text-center">
+                            Countries
+                        </th>
+                        <th class="text-center">
+                            Search Engine
+                        </th>
+                        <th></th>
+                    </tr>
+
+
+                    @foreach (var item in listReport)
+                    {
+                        <tr>
+                            <td class="text-center">
+                                @item.type
+                            </td>
+                            <td class="text-center">
+                                @item.url
+                            </td>
+                            <td class="text-center">
+                                @item.keywords
+                            </td>
+                            <td class="text-center">
+                                @item.countries
+                            </td>
+                            <td class="text-center">
+                                @item.searchEngines
+                            </td>
+
+                        </tr>
+                    }
+
+                </table>
+            }
+
+
+        }
+</div>
+
+
+
+<script src="~/Scripts/jquery.validate.min.js"></script>
+<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
